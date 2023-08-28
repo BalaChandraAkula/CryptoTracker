@@ -16,7 +16,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   background-color: var(--black);
   color: var(--white);
-  height: 200vh;
+  /* height: 200vh; */
   font-family: 'Inter', sans-serif;
 }
 
@@ -39,6 +39,11 @@ body {
 ::-webkit-scrollbar-thumb {
   background: var(--blue);
   border-radius: 3rem;
+}
+
+a{
+  color: var(--white) !important;
+  text-decoration: none !important;
 }
 
 
