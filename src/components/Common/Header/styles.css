@@ -31,3 +31,30 @@
     color: var(--white);
     transition: all 0.3s; 
 }
+
+.mobile-drawer,.drawer-div{
+    display: none;
+}
+
+@media only screen and (max-width: 800px){
+    .logo{
+        font-size: 1rem;
+    }
+    .navbar{
+        padding: 1.5rem;
+    }
+    .links{
+        display: none;
+    }
+    .mobile-drawer{
+        display: block;
+    }
+    .drawer-div{
+        display: block;
+        width: 40vw;
+        background-color: var(--black);
+        height: 100vh;
+        padding: 1.5rem;
+    }
+}
+
