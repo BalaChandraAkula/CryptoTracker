@@ -1,7 +1,7 @@
 .btn{
     background-color: var(--blue);
     color: var(--white);
-    padding: 0.5rem 1.5rem;
+    padding: 0.5rem 1.4rem;   /*0.5rem 1.5rem*/
     border-radius: 3rem;
     font-weight: 600;
     cursor: pointer;
@@ -20,7 +20,7 @@
     background-color: var(--black);
     color: var(--white);
     border: 2px solid var(--blue);
-    padding: 0.5rem 1.5rem;
+    padding: 0.5rem 1.4rem;   /*0.5rem 1.5rem*/
     border-radius: 3rem;
     font-weight: 600;
     cursor: pointer;
