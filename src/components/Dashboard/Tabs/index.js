@@ -7,7 +7,7 @@ import TabPanel from '@mui/lab/TabPanel';
 import { createTheme } from '@mui/material';
 import { ThemeProvider } from '@emotion/react';
 
-export default function TabsComponent() {
+export default function TabsComponent({coins}) {
   const [value, setValue] = useState('grid');
 
   const handleChange = (event, newValue) => {
@@ -40,7 +40,11 @@ export default function TabsComponent() {
           </TabList>
         
         <TabPanel value="grid">
-            <div>Mapping for grid</div>
+            <div>{coins.map((item,i)=>{
+              return(
+                <p key={i}>{i+1}.{item.name}</p>
+              )
+            })}</div>
         </TabPanel>
         <TabPanel value="list">
             <div>Mapping for grid</div>
