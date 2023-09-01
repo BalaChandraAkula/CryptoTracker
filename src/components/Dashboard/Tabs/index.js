@@ -6,6 +6,8 @@ import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
 import { createTheme } from '@mui/material';
 import { ThemeProvider } from '@emotion/react';
+import Grid from '../Grid'
+import './styles.css'
 
 export default function TabsComponent({coins}) {
   const [value, setValue] = useState('grid');
@@ -40,11 +42,11 @@ export default function TabsComponent({coins}) {
           </TabList>
         
         <TabPanel value="grid">
-            <div>{coins.map((item,i)=>{
-              return(
-                <p key={i}>{i+1}.{item.name}</p>
-              )
-            })}</div>
+            <div className='grid-flex'>
+              {coins.map((coin,i)=>{
+                return <Grid coin={coin} key={i}/>
+              })}
+            </div>
         </TabPanel>
         <TabPanel value="list">
             <div>Mapping for grid</div>
