@@ -35,8 +35,6 @@ function Grid({coin}) {
           Matket Cap : ₹{coin.market_cap.toLocaleString()}
         </p>
       </div>
-      
-      
     </div>
   )
 }
