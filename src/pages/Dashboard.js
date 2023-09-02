@@ -4,12 +4,16 @@ import TabsComponent from '../components/Dashboard/Tabs'
 import axios from 'axios';
 import Search from '../components/Dashboard/Search';
 import PaginationComponent from '../components/Dashboard/Pagination';
+import Loader from '../components/Common/Loader';
+import BackToTop from '../components/Common/BackToTop';
 
 function DashboardPage() {
   const [coins,setCoins] = useState([]);
   const [paginatedCoins,setPaginatedCoins] = useState([]);
   const [search,setSearch] = useState("");
   const [page, setPage] = useState(1); 
+  const [isLoading,setIsLoading] = useState(true);
+
   const handlePageChange = (event, value) => {
     setPage(value); 
     var previousIndex = (value-10)*10;
@@ -35,6 +39,7 @@ function DashboardPage() {
       console.log(response);
       setCoins(response.data);
       setPaginatedCoins(response.data.slice(0,10))
+      setIsLoading(false);
     })
     .catch((error)=>{
       console.log(error);
@@ -42,12 +47,18 @@ function DashboardPage() {
   },[]);
 
   return (
-    <div>
-        <Header/>
+    <>
+      <Header/>
+      <BackToTop/>
+      {isLoading ? <Loader/> 
+      :
+      (<div>
         <Search search={search} onSearchChange={onSearchChange}/>
         <TabsComponent coins={search ? filteredCoins : paginatedCoins}/>
         {!search && <PaginationComponent page={page} handlePageChange={handlePageChange}/>}
-    </div>
+    </div>)
+      }
+    </>
   )
 }
 
