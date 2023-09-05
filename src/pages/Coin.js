@@ -10,13 +10,19 @@ import { getCoinData } from '../functions/getCoinData';
 import { getCoinPrices } from '../functions/getCoinPrices';
 import LineChart from '../components/Coin/LineChat';
 import { convertDate } from '../functions/convertDate';
+import SelectDays from '../components/Coin/SelectDate';
+import { settingChartData } from '../functions/settingChartData';
+import TogglePriceType from '../components/Coin/PriceType';
 
 function CoinPage() {
     const {id} = useParams();
     const [isLoading,setIsLoading] = useState(true);
     const [coinData,setCoinData] = useState();
-    const [days,setDays] = useState(90);
+    const [days,setDays] = useState(30);
     const [chartdata,setChartData] = useState({});
+    const [priceType, setPriceType] = useState('Prices');
+
+  
 
     useEffect(()=>{
         if(id){
@@ -28,29 +34,37 @@ function CoinPage() {
         const data = await getCoinData(id);
         if(data){
             coinObject(setCoinData,data);
-            const prices = await getCoinPrices(id,days);
+            const prices = await getCoinPrices(id,days,priceType);
             if(prices.length > 0){
-                console.log("woooooo");
-
-                setChartData({
-                    labels : prices.map((price)=> convertDate(price[0])),
-                    datasets : [
-                        {
-                            data:prices.map((price)=> price[1]),
-                            borderColor:"#3a80e9",
-                            borderWidth:2,
-                            fill:true,
-                            tension : 0.25,
-                            backgroundColor : "rgba(58,128,233,0.1)",
-                            pointRadius : 0,
-                        },
-                    ],
-                });
-
+                settingChartData(setChartData,prices);
                 setIsLoading(false);
             }
         }
     }
+
+  const handleDaysChange = async (event) => {
+    setIsLoading(true);
+    setDays(event.target.value);
+    const prices = await getCoinPrices(id,event.target.value,priceType);
+            if(prices.length > 0){
+                settingChartData(setChartData,prices);
+                setIsLoading(false);
+            }
+  };
+
+  const handlePriceTypeChange = async (event, newType) => {
+    setIsLoading(true);
+    setPriceType(newType);
+    // console.log(newType);
+    // console.log(event.target.value);
+    const prices = await getCoinPrices(id,days,newType);
+    if(prices.length > 0){
+        settingChartData(setChartData,prices);
+        setIsLoading(false);
+    }
+
+  };
+
 
   return (
     <div>
@@ -58,11 +72,13 @@ function CoinPage() {
         {isLoading ? (<Loader/>)
          : 
          (<>
-            <div className='grey-wrapper'>
+            <div className='grey-wrapper' style={{padding:"0rem 1rem"}}>
                 <List coin={coinData}/>
             </div>
             <div className='grey-wrapper'>
-                <LineChart chartdata={chartdata}/>
+                <SelectDays days={days} handleDaysChange={handleDaysChange}/>
+                <TogglePriceType priceType={priceType} handlePriceTypeChange={handlePriceTypeChange}/>
+                <LineChart chartdata={chartdata} priceType={priceType}/>
             </div>
             <CoinInfo heading={coinData.name} desc={coinData.desc}/>
          </>)}
@@ -71,3 +87,6 @@ function CoinPage() {
 }
 
 export default CoinPage;
+
+
+
