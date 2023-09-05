@@ -8,12 +8,16 @@ import Header from '../components/Common/Header';
 import CoinInfo from '../components/Coin/CoinInfo';
 import { getCoinData } from '../functions/getCoinData';
 import { getCoinPrices } from '../functions/getCoinPrices';
+import LineChart from '../components/Coin/LineChat';
+import { convertDate } from '../functions/convertDate';
 
 function CoinPage() {
     const {id} = useParams();
     const [isLoading,setIsLoading] = useState(true);
     const [coinData,setCoinData] = useState();
-    const [days,setDays] = useState(30);
+    const [days,setDays] = useState(90);
+    const [chartdata,setChartData] = useState({});
+
     useEffect(()=>{
         if(id){
             getData();
@@ -27,6 +31,22 @@ function CoinPage() {
             const prices = await getCoinPrices(id,days);
             if(prices.length > 0){
                 console.log("woooooo");
+
+                setChartData({
+                    labels : prices.map((price)=> convertDate(price[0])),
+                    datasets : [
+                        {
+                            data:prices.map((price)=> price[1]),
+                            borderColor:"#3a80e9",
+                            borderWidth:2,
+                            fill:true,
+                            tension : 0.25,
+                            backgroundColor : "rgba(58,128,233,0.1)",
+                            pointRadius : 0,
+                        },
+                    ],
+                });
+
                 setIsLoading(false);
             }
         }
@@ -40,6 +60,9 @@ function CoinPage() {
          (<>
             <div className='grey-wrapper'>
                 <List coin={coinData}/>
+            </div>
+            <div className='grey-wrapper'>
+                <LineChart chartdata={chartdata}/>
             </div>
             <CoinInfo heading={coinData.name} desc={coinData.desc}/>
          </>)}
