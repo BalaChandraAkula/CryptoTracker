@@ -42,7 +42,7 @@ function SelectCoins({crypto1,crypto2,handleCoinChange}) {
           label="Crypto 1"
           onChange={(event)=>handleCoinChange(event,false)}
         >
-          {allCoins.map((coin,index)=>(
+          {allCoins.filter((item)=>item.id != crypto2).map((coin,index)=>(
             <MenuItem key={index} value={coin.id}>{coin.name}</MenuItem>
           ))}
         </Select>
@@ -53,7 +53,7 @@ function SelectCoins({crypto1,crypto2,handleCoinChange}) {
           label="Crypto 2"
           onChange={(event)=>handleCoinChange(event,true)}
         >
-          {allCoins.map((coin,index)=>(
+          {allCoins.filter((item)=>item.id != crypto1).map((coin,index)=>(
             <MenuItem key={index} value={coin.id}>{coin.name}</MenuItem>
           ))}
         </Select>

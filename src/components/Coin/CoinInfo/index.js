@@ -7,7 +7,7 @@ function CoinInfo({heading,desc}) {
     const [flag,setFlag] = useState(false);
 
   return (
-    <div className='grey-wrapper'>
+    <div className='grey-wrapper' style={{padding:"0rem 1rem"}}>
         <h2 className='coin-info-heading'>{heading}</h2>
         <p className='coin-info-desc'
             onClick={()=>setFlag(!flag)}

@@ -16,7 +16,24 @@ function LineChart({chartdata,priceType,multiAxis}){
             interactive:false,
         },
         scales:{
-            y:{
+            crypto1:{
+                type : "linear",
+                display :true,
+                position : "left",
+                ticks:{
+                    callback: function(value,index,ticks){
+                        if(priceType === "Prices"){
+                            return '$' + value.toLocaleString();
+                        }else{
+                            return '$' + convertNumber(value).toLocaleString();
+                        }
+                    },
+                },
+            },
+            crypto2:{
+                type : "linear",
+                display :true,
+                position : "right",
                 ticks:{
                     callback: function(value,index,ticks){
                         if(priceType === "Prices"){
